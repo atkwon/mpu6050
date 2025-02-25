@@ -1,4 +1,5 @@
 #include "mpu6050.h"
+#include <stdio.h>
 
 #include "hardware/i2c.h"
 #include "pico/stdlib.h"
@@ -100,7 +101,7 @@ int mpu6050_read_gyro(int16_t *gx, int16_t *gy, int16_t *gz)
 	return 0;
 }
 
-void mpu6050_read_accel(int16_t *ax, int16_t *ay, int16_t *az)
+int mpu6050_read_accel(int16_t *ax, int16_t *ay, int16_t *az)
 {
 	uint8_t accel_reg = MPU6050_ACCEL_XOUT;
 	uint8_t data[6];
