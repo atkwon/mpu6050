@@ -28,11 +28,13 @@ int main(){
 			5,	/* SCL pin # */
 			1,	/* gyro_fs */
 			1,	/* accel_fs */
-			100000)	/* baudrate */
+			100000);/* baudrate */
 	
 	if(init != 0){
 		printf("Error: MPU6050 initialization failed\n");
-		while(;;);
+		while(true){
+		
+		}
 	}
 
 	printf("MPU6050 initialized\n");
@@ -40,7 +42,7 @@ int main(){
 	int16_t gx, gy, gz;
 	float x, y, z;
 
-	while(;;){
+	while(true){
 		int read = mpu6050_read_gyro(&gx, &gy, &gz);
 		if(read != 0){
 			printf("Error: Failed to read gyro\n");
