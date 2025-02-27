@@ -33,7 +33,7 @@ int main(){
 	if(init != 0){
 		printf("Error: MPU6050 initialization failed\n");
 		while(true){
-		
+			tight_loop_contents();
 		}
 	}
 
