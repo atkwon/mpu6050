@@ -3,6 +3,12 @@
 #include "hardware/i2c.h"
 #include "mpu6050.h"
 
+#define SDA_PIN		4
+#define SCL_PIN 	5
+#define GYRO_FS 	1
+#define ACCEL_FS	1
+#define BAUDRATE	100000
+
 /*
  * Gyro Full Scale	/ Sensitivity
  * 0 => 250			131
@@ -17,18 +23,17 @@
  * 3 => 16g			2048 LSB/g
  */
 
-
-int main(){
-
+int main(void)
+{
 
 	stdio_init_all();
 
 	int init = mpu6050_init(i2c0,
-			4,	/* SDA pin # */
-			5,	/* SCL pin # */
-			1,	/* gyro_fs */
-			1,	/* accel_fs */
-			100000);/* baudrate */
+			SDA_PIN,
+			SCL_PIN,
+			GYRO_FS,
+			ACCEL_FS,
+			BAUDRATE);
 	
 	if(init != 0){
 		printf("Error: MPU6050 initialization failed\n");
