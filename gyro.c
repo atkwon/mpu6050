@@ -14,14 +14,19 @@ int main(void)
 
 	stdio_init_all();
 
-	int init = mpu6050_init(i2c0,
-			SDA_PIN,
-			SCL_PIN,
-			GYRO_FS,
-			ACCEL_FS,
-			BAUDRATE);
+	mpu6050_handle_t mpu;
+	mpu.i2c = i2c0;
+
+	mpu6050_config_t config = {
+		.sda = SDA_PIN,
+		.scl = SCL_PIN,
+		.gyro_fs = GYRO_FS,
+		.accel_fs = ACCEL_FS,
+		.baudrate = BAUDRATE
+	};
+
 	
-	if(init != 0){
+	if(mpu6050_init(&mpu, &config) != 0){
 		printf("Error: MPU6050 initialization failed\n");
 		while(true){
 			tight_loop_contents();
@@ -30,18 +35,18 @@ int main(void)
 
 	printf("MPU6050 initialized\n");
 
-	int16_t gx, gy, gz;
+	mpu6050_axis_t raw_gyro;
 	float x, y, z;
 
 	while(true){
-		int read = mpu6050_read_gyro(&gx, &gy, &gz);
+		int read = mpu6050_read_gyro(&mpu, &raw_gyro);
 		if(read != 0){
 			printf("Error: Failed to read gyro\n");
 		}
 		else{
-			x = gx / GYRO_FULL_SCALE_500;
-			y = gy / GYRO_FULL_SCALE_500;
-			z = gz / GYRO_FULL_SCALE_500;
+			x = raw_gyro.x / GYRO_FULL_SCALE_500;
+			y = raw_gyro.y / GYRO_FULL_SCALE_500;
+			z = raw_gyro.z / GYRO_FULL_SCALE_500;
 
 			printf("Gyro (deg/s): X = %.2f, Y = %.2f, Z = %.2f\n", x, y, z);
 		}
