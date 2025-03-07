@@ -13,6 +13,30 @@
 #define MPU6050_GYRO_XOUT  0x43
 #define MPU6050_ACCEL_XOUT 0x3B
 
+/*
+ * Gyro Full Scale      / Sensitivity
+ * 0 => 250                     131
+ * 1 => 500                     65.5
+ * 2 => 1000                    32.8
+ * 3 => 2000 deg/s              16.4 LSB/(deg/s)
+ *
+ * Accel Full Scale     / Sensitivity
+ * 0 => 2                       16384
+ * 1 => 4                       8192
+ * 2 => 8                       4096
+ * 3 => 16g                     2048 LSB/g
+ */
+
+#define GYRO_FULL_SCALE_250	131f
+#define GYRO_FULL_SCALE_500	65.5f
+#define GYRO_FULL_SCALE_1000	32.8f
+#define GYRO_FULL_SCALE_2000	16.4f
+
+#define ACCEL_FULL_SCALE_2	16384
+#define ACCEL_FULL_SCALE_4	8192
+#define ACCEL_FULL_SCALE_8	4096
+#define ACCEL_FULL_SCALE_16	2048
+
 
 int mpu6050_init(i2c_inst_t *i2c,
 	uint		      sda,
