@@ -39,11 +39,11 @@ typedef struct{
 typedef struct{
 	int16_t 	x;
 	int16_t 	y;
-	int16_5 	z;
+	int16_t 	z;
 } mpu6050_axis_t;
 
 
-int mpu6050_init(mpu6050_handle_t *handle, mpu6050_config_t *config);
+int mpu6050_init(mpu6050_handle_t *handle, const mpu6050_config_t *config);
 
 int mpu6050_read_gyro(mpu6050_handle_t *handle, mpu6050_axis_t *gyro);
 
