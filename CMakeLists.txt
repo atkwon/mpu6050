@@ -19,4 +19,3 @@ target_link_libraries(gyro_test
 )
 
 pico_add_extra_outputs(gyro_test)
-
