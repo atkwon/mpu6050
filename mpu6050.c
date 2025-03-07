@@ -4,15 +4,7 @@
 #include "hardware/i2c.h"
 #include "pico/stdlib.h"
 
-#define MPU6050_I2C_ADDR   0x68
-#define MPU6050_PWR_MGMT_1 0x6B
-
-#define MPU6050_GYRO_CONFIG  0x1B
-#define MPU6050_ACCEL_CONFIG 0x1C
-
-#define MPU6050_GYRO_XOUT  0x43
-#define MPU6050_ACCEL_XOUT 0x3B
-
+#define MPU6050_I2C_DEFAULT_ADDR   0x68
 
 /* store i2c instance for read and write */
 static i2c_inst_t *mpu6050_i2c = NULL;
