@@ -4,8 +4,6 @@
 #include "hardware/i2c.h"
 #include "pico/stdlib.h"
 
-#define MPU6050_I2C_DEFAULT_ADDR   0x68
-
 static int mpu6050_wakeup(mpu6050_handle_t *handle);
 static int mpu6050_config_gyro(mpu6050_handle_t *handle, uint8_t gyro_fs);
 static int mpu6050_config_accel(mpu6050_handle_t *handle, uint8_t accel_fs);

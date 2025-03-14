@@ -15,8 +15,7 @@ int main(void)
 	stdio_init_all();
 
 
-	mpu6050_handle_t mpu;
-	mpu.i2c = i2c0;
+	mpu6050_handle_t mpu = default_mpu;
 
 	mpu6050_config_t config = {
 		.sda = SDA_PIN,

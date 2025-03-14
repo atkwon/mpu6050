@@ -5,6 +5,7 @@
 
 #include <stdint.h>
 
+#define MPU6050_I2C_DEFAULT_ADDR 0x68
 #define MPU6050_PWR_MGMT_1 0x6B
 
 #define MPU6050_GYRO_CONFIG  0x1B
@@ -48,5 +49,11 @@ int mpu6050_init(mpu6050_handle_t *handle, const mpu6050_config_t *config);
 int mpu6050_read_gyro(mpu6050_handle_t *handle, mpu6050_axis_t *gyro);
 
 int mpu6050_read_accel(mpu6050_handle_t *handle, mpu6050_axis_t *accel);
+
+const mpu_6050_handle_t default_mpu = {
+	.i2c = i2c0,
+	.address = MPU6050_I2C_DEFAULT_ADDR
+};
+
 
 #endif /* MPU6050_H */
