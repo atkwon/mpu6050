@@ -14,6 +14,7 @@ int main(void)
 
 	stdio_init_all();
 
+
 	mpu6050_handle_t mpu;
 	mpu.i2c = i2c0;
 
@@ -24,6 +25,12 @@ int main(void)
 		.accel_fs = ACCEL_FS,
 		.baudrate = BAUDRATE
 	};
+
+	i2c_init(handle->i2c, config->baudrate);
+	gpio_set_function(config->sda, GPIO_FUNC_I2C);
+	gpio_set_function(config->scl, GPIO_FUNC_I2C);
+	gpio_pull_up(config->sda);
+	gpio_pull_up(config->scl);
 
 	
 	if(mpu6050_init(&mpu, &config) != 0){
