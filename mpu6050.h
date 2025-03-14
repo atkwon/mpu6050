@@ -45,6 +45,17 @@ typedef struct{
 	int16_t 	z;
 } mpu6050_axis_t;
 
+typedef enum{
+	SUCCES,
+	WAKEUP_ERROR,
+	GYRO_CONFIG_ERROR,
+	GYRO_WRITE_ERROR,
+	GYRO_READ_ERROR,
+	ACCEL_CONFIG_ERROR,
+	ACCEL_WRITE_ERROR,
+	ACCEL_READ_ERROR
+} errorcode;
+
 
 int mpu6050_init(mpu6050_handle_t *handle, const mpu6050_config_t *config);
 
