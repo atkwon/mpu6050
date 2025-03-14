@@ -24,6 +24,8 @@
 #define ACCEL_FULL_SCALE_8	4096
 #define ACCEL_FULL_SCALE_16	2048
 
+#define DEFAULT_HANDLER(X) mpu6050_handle_t X = {.i2c = i2c0, .address = MPU6050_I2C_DEFAULT_ADDR}
+
 typedef struct{
 	i2c_inst_t *	i2c;
 	uint8_t 	address;
@@ -49,11 +51,6 @@ int mpu6050_init(mpu6050_handle_t *handle, const mpu6050_config_t *config);
 int mpu6050_read_gyro(mpu6050_handle_t *handle, mpu6050_axis_t *gyro);
 
 int mpu6050_read_accel(mpu6050_handle_t *handle, mpu6050_axis_t *accel);
-
-const mpu_6050_handle_t default_mpu = {
-	.i2c = i2c0,
-	.address = MPU6050_I2C_DEFAULT_ADDR
-};
 
 
 #endif /* MPU6050_H */
