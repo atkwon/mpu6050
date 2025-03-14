@@ -17,12 +17,6 @@ int mpu6050_init(mpu6050_handle_t *handle, const mpu6050_config_t *config)
 		handle->address = MPU6050_I2C_DEFAULT_ADDR;
 	}
 
-	i2c_init(handle->i2c, config->baudrate);
-	gpio_set_function(config->sda, GPIO_FUNC_I2C);
-	gpio_set_function(config->scl, GPIO_FUNC_I2C);
-	gpio_pull_up(config->sda);
-	gpio_pull_up(config->scl);
-
 
 	int ret = mpu6050_wakeup(handle);
 	if (ret != 2) {
@@ -45,34 +39,6 @@ int mpu6050_init(mpu6050_handle_t *handle, const mpu6050_config_t *config)
 
 	return 0;
 }
-
-static int mpu6050_wakeup(mpu6050_handle_t *handle){
-	uint8_t buffer[2];
-	buffer[0] = MPU6050_PWR_MGMT_1;
-	buffer[1] = 0x00;  // clear sleeping bit
-	int ret	  = i2c_write_blocking(handle->i2c, handle->address, buffer, 2, false);
-
-	return ret;
-}
-
-static int mpu6050_config_gyro(mpu6050_handle_t *handle, uint8_t gyro_fs){
-	uint8_t gyro_config_buf[2];
-	gyro_config_buf[0] = MPU6050_GYRO_CONFIG;
-	gyro_config_buf[1] = gyro_fs << 3; /* uses bits 4,3 */
-	int ret		   = i2c_write_blocking(handle->i2c, handle->address, gyro_config_buf, 2, false);
-
-	return ret;
-}
-
-static int mpu6050_config_accel(mpu6050_handle_t *handle, uint8_t accel_fs){
-	uint8_t accel_config_buf[2];
-	accel_config_buf[0] = MPU6050_ACCEL_CONFIG;
-	accel_config_buf[1] = accel_fs << 3;
-	int ret		    = i2c_write_blocking(handle->i2c, handle->address, accel_config_buf, 2, false);
-	
-	return ret;
-}
-
 
 int mpu6050_read_gyro(mpu6050_handle_t *handle, mpu6050_axis_t *gyro)
 {
@@ -120,4 +86,32 @@ int mpu6050_read_accel(mpu6050_handle_t *handle, mpu6050_axis_t *accel)
 	accel->z = (int16_t) ((data[4] << 8) | data[5]);
 
 	return 0;
+}
+
+
+static int mpu6050_wakeup(mpu6050_handle_t *handle){
+	uint8_t buffer[2];
+	buffer[0] = MPU6050_PWR_MGMT_1;
+	buffer[1] = 0x00;  // clear sleeping bit
+	int ret	  = i2c_write_blocking(handle->i2c, handle->address, buffer, 2, false);
+
+	return ret;
+}
+
+static int mpu6050_config_gyro(mpu6050_handle_t *handle, uint8_t gyro_fs){
+	uint8_t gyro_config_buf[2];
+	gyro_config_buf[0] = MPU6050_GYRO_CONFIG;
+	gyro_config_buf[1] = gyro_fs << 3; /* uses bits 4,3 */
+	int ret		   = i2c_write_blocking(handle->i2c, handle->address, gyro_config_buf, 2, false);
+
+	return ret;
+}
+
+static int mpu6050_config_accel(mpu6050_handle_t *handle, uint8_t accel_fs){
+	uint8_t accel_config_buf[2];
+	accel_config_buf[0] = MPU6050_ACCEL_CONFIG;
+	accel_config_buf[1] = accel_fs << 3;
+	int ret		    = i2c_write_blocking(handle->i2c, handle->address, accel_config_buf, 2, false);
+	
+	return ret;
 }
