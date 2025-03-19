@@ -1,4 +1,4 @@
-#define mask2shift(X) __builtin_ctzg(X)
+#define mask2shift(X) __builtin_ctz(X)
 
 #define bit_set(X, mask) (((X) << mask2shift(mask)) & (mask))
 #define bit_get(X, mask) (((X) & (mask)) >> mask2shift(mask))
