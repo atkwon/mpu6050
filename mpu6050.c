@@ -21,24 +21,21 @@ int mpu6050_init(mpu6050_handle_t *handle, const mpu6050_config_t *config)
 
 	int ret = mpu6050_wakeup(handle, config->clk_sel);
 	if (ret != 2) {
-		printf("Error: Failed to wake up. Expected 2 bytes, got %d.\n", ret);
-		return -1;
+		return MPU6050_ERR_WAKEUP;
 	}
 
 	ret = mpu6050_config_gyro(handle, config->gyro_fs);
 	if (ret != 2) {
-		printf("Error: Failed to configure gyro. Expected 2 bytes, got %d.\n", ret);
-		return -1;
+		return MPU6050_ERR_GYRO_CFG;
 	}
 
 
 	ret = mpu6050_config_accel(handle, config->accel_fs);
 	if (ret != 2) {
-		printf("Error: Failed to configure accel. Expected 2 bytes, got %d.\n", ret);
-		return -1;
+		return MPU6050_ERR_ACCEL_CFG;
 	}
 
-	return 0;
+	return MPU6050_OK;
 }
 
 int mpu6050_read_gyro(mpu6050_handle_t *handle, mpu6050_axis_t *gyro)
@@ -48,21 +45,19 @@ int mpu6050_read_gyro(mpu6050_handle_t *handle, mpu6050_axis_t *gyro)
 
 	int ret = i2c_write_blocking_until(handle->i2c, handle->address, &gyro_reg, 1, true, TIMEOUT_MS);
 	if (ret != 1) {
-		printf("Error: Failed to write gyro address. Expected 1 bytes, got %d.\n", ret);
-		return -1;
+		return MPU6050_ERR_GYRO_WRITE;
 	}
 
 	ret = i2c_read_blocking_until(handle->i2c, handle->address, data, 6, false, TIMEOUT_MS);
 	if (ret != 6) {
-		printf("Error: Failed to read gyro data. Expected 6 bytes, got %d.\n", ret);
-		return -1;
+		return MPU6050_ERR_GYRO_READ;
 	}
 
 	gyro->x = (int16_t) ((data[0] << 8) | data[1]);
 	gyro->y = (int16_t) ((data[2] << 8) | data[3]);
 	gyro->z = (int16_t) ((data[4] << 8) | data[5]);
 
-	return 0;
+	return MPU6050_OK;
 }
 
 int mpu6050_read_accel(mpu6050_handle_t *handle, mpu6050_axis_t *accel)
@@ -72,21 +67,19 @@ int mpu6050_read_accel(mpu6050_handle_t *handle, mpu6050_axis_t *accel)
 
 	int ret = i2c_write_blocking_until(handle->i2c, handle->address, &accel_reg, 1, true, TIMEOUT_MS);
 	if (ret != 1) {
-		printf("Error: Failed to write accel address. Expected 1 bytes, got %d.\n", ret);
-		return -1;
+		return MPU6050_ERR_ACCEL_WRITE;
 	}
 
 	ret = i2c_read_blocking_until(handle->i2c, handle->address, data, 6, false, TIMEOUT_MS);
 	if (ret != 6) {
-		printf("Error: Failed to read accel data. Expected 6 bytes, got %d.\n", ret);
-		return -1;
+		return MPU6050_ERR_ACCEL_READ;
 	}
 
 	accel->x = (int16_t) ((data[0] << 8) | data[1]);
 	accel->y = (int16_t) ((data[2] << 8) | data[3]);
 	accel->z = (int16_t) ((data[4] << 8) | data[5]);
 
-	return 0;
+	return MPU6050_OK;
 }
 
 
