@@ -26,11 +26,11 @@ int main(void)
 		.baudrate = BAUDRATE
 	};
 
-	i2c_init(handle->i2c, config->baudrate);
-	gpio_set_function(config->sda, GPIO_FUNC_I2C);
-	gpio_set_function(config->scl, GPIO_FUNC_I2C);
-	gpio_pull_up(config->sda);
-	gpio_pull_up(config->scl);
+	i2c_init(mpu.i2c, config.baudrate);
+	gpio_set_function(config.sda, GPIO_FUNC_I2C);
+	gpio_set_function(config.scl, GPIO_FUNC_I2C);
+	gpio_pull_up(config.sda);
+	gpio_pull_up(config.scl);
 
 	
 	if(mpu6050_init(&mpu, &config) != 0){

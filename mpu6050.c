@@ -7,7 +7,7 @@
 
 #define TIMEOUT_MS TIMER_MS(10) 
 
-static int mpu6050_wakeup(mpu6050_handle_t *handle);
+static int mpu6050_wakeup(mpu6050_handle_t *handle, uint8_t clk_sel);
 static int mpu6050_config_gyro(mpu6050_handle_t *handle, uint8_t gyro_fs);
 static int mpu6050_config_accel(mpu6050_handle_t *handle, uint8_t accel_fs);
 
@@ -87,7 +87,7 @@ static int mpu6050_wakeup(mpu6050_handle_t *handle, uint8_t clk_sel){
 	uint8_t buffer[2];
 	buffer[0] = MPU6050_PWR_MGMT_1;
 	buffer[1] = bit_set(0, MPU_6050_PM_CONFIG_SLEEP_MASK)
-		|   bit_set(clk_sel, MPU_6050_PM_CONFIG_CLKSEL_MASK)
+		|   bit_set(clk_sel, MPU_6050_PM_CONFIG_CLKSEL_MASK);
 	int ret	  = i2c_write_blocking_until(handle->i2c, handle->address, buffer, 2, false, TIMEOUT_MS);
 
 	return ret;
