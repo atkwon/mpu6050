@@ -7,6 +7,7 @@
 #define SCL_PIN 	5
 #define GYRO_FS 	1
 #define ACCEL_FS	1
+#define CLK_SEL		0
 #define BAUDRATE	100000
 
 int main(void)
@@ -21,6 +22,7 @@ int main(void)
 		.scl = SCL_PIN,
 		.gyro_fs = GYRO_FS,
 		.accel_fs = ACCEL_FS,
+		.clk_sel = CLK_SEL,
 		.baudrate = BAUDRATE
 	};
 

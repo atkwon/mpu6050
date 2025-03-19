@@ -25,6 +25,7 @@
 #define ACCEL_FULL_SCALE_16	2048
 
 #define DEFAULT_HANDLER(X) mpu6050_handle_t X = {.i2c = i2c0, .address = MPU6050_I2C_DEFAULT_ADDR}
+#define TIMER_MS(X) make_timeout_time_ms(X) 
 
 typedef struct{
 	i2c_inst_t *	i2c;
@@ -36,6 +37,7 @@ typedef struct{
 	uint		scl;
 	uint8_t		gyro_fs;
 	uint8_t		accel_fs;
+	uint8_t		clk_sel;
 	uint		baudrate;
 } mpu6050_config_t;
 
